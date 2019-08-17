@@ -1,0 +1,81 @@
+#include<iostream.h>
+#include<conio.h>
+#include<stdlib.h>
+void main()
+{
+clrscr();
+int choice,u,c,t=51;
+cout<<"\t\t\t...THE STICK GAME...\n";
+cout<<"\tGame Rules:\n";
+cout<<"Its a User v/s Bot game\n";
+cout<<"The person who picks the last stick loses\n";
+cout<<"There are 51 sticks in total\n";
+cout<<"Minimum Sticks that can be picked = 1\n";
+cout<<"Maximum Sticks that can be picked = 4\n";
+cout<<"\nSelect the person who makes the first move:\n";
+cout<<"1.User 2.CPU \n";
+cout<<"Enter your choice :\n";
+cin>>choice;
+switch(choice)
+{
+case 1:while(t>1)                  //Case where only CPU will win because the number of sticks picked by cpu and user is a multiple of 5
+       {
+	cout<<"\n\nEnter the number of sticks to pick :\n";
+	cin>>u;
+	if(u>4 || u<1)
+	{
+	 cout<<"You can only choose 1 to 4 sticks\n";
+	 continue;
+	}
+	c=5-u;
+	cout<<"Sticks picked by CPU =  "<<c;
+	t=t-(c+u);
+	cout<<"\nRemaining sticks =  "<<t;
+	if(t==1) //If only 1 stick is remaining
+	{
+	 cout<<"\nLast stick is picked by user\n";
+	 cout<<"Sorry!!!You Lost";
+	}
+       }
+       break;
+
+case 2:while(t>1)   //Case with possibility of user to win
+       {
+	int upper=4,lower=1;
+	randomize();
+	c=(rand()%(upper-lower+1)+lower); //CPU picking ramdom number of sticks between 1 and 4
+	cout<<"\n\nSticks picked by CPU =  "<<c;
+	if(c>=t) //To keep the sticks picked by cpu less than remaining no. of sticks
+	goto label;
+	cout<<"\nEnter no. of sticks picked by User:\n";
+	cin>>u;
+	if(u>4 || u<1)
+	{
+	 cout<<"You can only choose 1 to 4 sticks\n";
+	 continue;
+	}
+	t=t-(c+u);
+	cout<<"Remaining sticks =  "<<t;
+       }
+       if(t==0)       //If no sticks are left
+       {
+	cout<<"\nLast stick is picked by User\n";
+	cout<<"Sorry!!!You Lost\n";
+       }
+       else if(t==1)          //If 1 stick is left
+       {
+	cout<<"\nLast Stick is picked by CPU\n";
+	cout<<"Congrats!!!You Won\n";
+       }
+       else //If CPU picks all or more than remaining no. of sticks
+       {
+       label:cout<<"\nLast Stick is picked by CPU\n";
+	     cout<<"Congrats!!!You Won\n";
+       }
+       break;
+
+default:cout<<"Wrong Choice\n";
+
+}
+getch();
+}
